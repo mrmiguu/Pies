@@ -8,7 +8,7 @@ Question: when `a` changes, how do you update `b`?
     b = a + 2
 ```
 
-Engineers still use observers, listeners, events, signals, and polling to keep variables dependent on other variables and data dependent of data up to date.
+Engineers still use observers, listeners, events, signals, and polling to keep variables dependent on variables and data dependent of data up to date.
 
 ### Pies keeps all your variables and all your data fresh all the time. No matter how many dependencies.
 
