@@ -1,4 +1,6 @@
-# Pies is a reactive framework written for Go. [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mrmiguu/Pies/blob/master/LICENSE)
+# Pies is a reactive framework written for Go.
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mrmiguu/Pies/blob/master/LICENSE)
 
 Why Pies
 -
@@ -20,34 +22,36 @@ func main() {
     pie.Mount(myApp)
 }
 ```
-The `myApp` function calls everything. And everything calls everything else. And so on.
+The `myApp` function calls everything. And everything calls everything else.
 ```go
 func myApp() {
     println("myApp!")
 
-    myComponent()
-    myComponent2()
-    myComponent3()
-    myComponent4()
-    ...
-    myComponentN()
+    count := myCounter()
+
+    myPrinter(count)
 }
 ```
 In Pies, `pie.Var` represents a variable, and `pie.Do` is for calling code that you only want to run once or when dependencies change.
 ```go
-func myComponent() {
+func myCounter() int {
     count, setCount := pie.IntVar(1)
 
     pie.Do(func() {
         setCount(count + 99)
     })
 
+    return count
+}
+```
+Setting a variable triggers a cascading effect; all functions from the root downwards are re-called, allowing all variable and data changes to naturally propagate throughout your tree of Pies.
+```go
+func myPrinter(count int) {
     pie.Do(func() {
         println("count updated to", count) // 1, 100
     }, count)
 }
 ```
-Setting a variable triggers a cascading effect; all functions from the root downwards are re-called, allowing all variable and data changes to naturally propagate throughout your tree of Pies.
 
 In a nutshell
 -
